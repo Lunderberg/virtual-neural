@@ -23,7 +23,7 @@ void WorldState::AddCreature(std::function<CreatureAction(CurrentView)> mind,
   new_creature.hp = 100;
   new_creature.max_food = 100;
   new_creature.food = 100;
-  new_creature.size = 20;
+  new_creature.size = 5;
 
   next_creature_id++;
 
@@ -198,8 +198,9 @@ void WorldState::CreatureEat(CreaturePhysical& creature) {
 }
 
 void WorldState::CreatureSleep(CreaturePhysical& creature) {
-  double hp_recoverable = std::min(creature.food/creature.RecoveryEfficiency(),
-                                   creature.RecoveryRate());
+  double hp_recoverable = std::min(std::min(creature.food/creature.RecoveryEfficiency(),
+                                            creature.RecoveryRate()),
+                                   creature.max_hp - creature.hp);
   creature.hp -= creature.SleepHPCost();
   creature.hp += hp_recoverable;
   creature.food -= hp_recoverable*creature.RecoveryEfficiency();

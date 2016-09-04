@@ -21,9 +21,9 @@ int main() {
   // world.FoodSpawned().Connect([](const FoodLocation& f) {
   //     std::cout << "Food: " << f << std::endl;
   //   });
-  world.FoodEaten().Connect([](const CreaturePhysical& c, const FoodLocation& f) {
-      std::cout << "Eaten: " << f << std::endl;
-    });
+  // world.FoodEaten().Connect([](const CreaturePhysical& c, const FoodLocation& f) {
+  //     std::cout << "Eaten: " << f << std::endl;
+  //   });
   // world.FoodDepleted().Connect([](const FoodLocation& f) {
   //     std::cout << "Food depleted: " << f << std::endl;
   //   });
@@ -32,9 +32,16 @@ int main() {
   world.AddCreature(run_left, {2,2});
   world.AddCreature(run_right, {2,2});
   world.AddCreature(run_and_eat, {10, 10});
+  world.AddCreature(run_eat_kill, {150, 50});
 
-  for(int i=0; i<1e5; i++) {
-    //std::cout << world << "\n" << std::endl;
+  for(int i=0; i<1e6; i++) {
+    // std::cout << world << "\n" << std::endl;
+    // std::cin.get();
+    // std::cout << "\033[2J" << std::flush;
+
     world.Update();
   }
+
+  std::cout << "-----------------------------------------" << "\n"
+            << world << std::endl;
 }
